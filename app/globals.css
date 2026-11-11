@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #f4f6f5;
+  --surface: #ffffff;
+  --surface-2: #eef2f0;
+  --text: #14201c;
+  --muted: #5d6b66;
+  --border: #dde4e1;
+  --brand: #0b7a5f;
+  --brand-strong: #075c47;
+  --brand-contrast: #ffffff;
+  --yes: #15803d;
+  --yes-bg: #dcfce7;
+  --no: #b91c1c;
+  --no-bg: #fee2e2;
+  --maybe: #a16207;
+  --maybe-bg: #fef3c7;
+  --open: #475569;
+  --open-bg: #e2e8f0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1412;
+    --surface: #151f1c;
+    --surface-2: #1c2925;
+    --text: #e8efec;
+    --muted: #9aaaa4;
+    --border: #2a3833;
+    --brand: #2bb48f;
+    --brand-strong: #4fd1ad;
+    --brand-contrast: #062a20;
+    --yes: #4ade80;
+    --yes-bg: #14351f;
+    --no: #f87171;
+    --no-bg: #3b1515;
+    --maybe: #fbbf24;
+    --maybe-bg: #3a2c0b;
+    --open: #cbd5e1;
+    --open-bg: #26323a;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-contrast: var(--brand-contrast);
+  --color-yes: var(--yes);
+  --color-yes-bg: var(--yes-bg);
+  --color-no: var(--no);
+  --color-no-bg: var(--no-bg);
+  --color-maybe: var(--maybe);
+  --color-maybe-bg: var(--maybe-bg);
+  --color-open: var(--open);
+  --color-open-bg: var(--open-bg);
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+}
+
+@utility card {
+    @apply rounded-2xl border border-border bg-surface;
+  }
+
+@utility btn {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-4 text-base font-semibold transition active:scale-[0.98] disabled:opacity-50;
+  }
+
+@utility btn-primary {
+    @apply btn bg-brand text-brand-contrast;
+  }
+
+@utility btn-secondary {
+    @apply btn border border-border bg-surface text-text;
+  }
+
+@utility btn-ghost {
+    @apply btn text-brand;
+  }
+
+@utility input {
+    @apply min-h-12 w-full rounded-xl border border-border bg-surface px-4 text-base text-text outline-none placeholder:text-muted focus:border-brand focus:ring-2 focus:ring-brand/30;
+  }
+
+@utility label {
+    @apply mb-1.5 block text-sm font-medium text-muted;
+  }
+
+@utility chip {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold;
+  }

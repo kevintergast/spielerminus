@@ -1,0 +1,35 @@
+# Tests laufen separat und blockieren keinen Deploy.
+image: node:22
+
+stages: [check, test, deploy]
+
+default:
+  before_script:
+    - corepack enable
+    - pnpm install --frozen-lockfile
+  cache:
+    key: pnpm-$CI_COMMIT_REF_SLUG
+    paths: [.pnpm-store]
+
+typecheck:
+  stage: check
+  script:
+    - pnpm typecheck
+    - pnpm lint
+
+test:
+  stage: test
+  allow_failure: true
+  script:
+    - pnpm test
+
+deploy:
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: manual
+  needs: [typecheck]
+  script:
+    # benötigt CLOUDFLARE_API_TOKEN und CLOUDFLARE_ACCOUNT_ID als geschützte CI-Variablen
+    - pnpm db:migrate:remote
+    - pnpm run deploy

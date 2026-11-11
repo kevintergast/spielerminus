@@ -1,0 +1,32 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "spielerminus",
+  // Eigener Einstieg: leitet an Next.js weiter und enthält den Cron-Handler.
+  "main": "worker.ts",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "spielerminus" }],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "spielerminus",
+      "database_id": "c237594b-528c-48d7-9cb1-6188fa43db97",
+      "migrations_dir": "drizzle"
+    }
+  ],
+  "send_email": [{ "name": "EMAIL" }],
+  "triggers": { "crons": ["* * * * *"] },
+  "routes": [{ "pattern": "spielerminus.app", "custom_domain": true }],
+  "vars": {
+    "APP_URL": "https://spielerminus.app",
+    "MAIL_FROM": "spielerminus <noreply@spielerminus.app>",
+    "VAPID_SUBJECT": "https://spielerminus.app",
+    // Öffentlicher Schlüssel; der private liegt als Secret VAPID_PRIVATE_KEY.
+    "VAPID_PUBLIC_KEY": "BMl2otlKaHAYcQ26JadQI4DwQ5dytT9d0Cz9nksBaqaEClJprSg8fgQONRdoz1dZUXOM-svTatdW0IZjEZeOj20"
+  },
+  "observability": { "enabled": true }
+}
